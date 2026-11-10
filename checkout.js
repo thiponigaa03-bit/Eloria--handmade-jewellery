@@ -83,12 +83,16 @@ checkoutForm?.addEventListener('submit', async (event) => {
 
     checkoutMessage.textContent = 'Submitting your order…';
     try {
-        const response = await fetch('/api/orders', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-        const result = await response.json();
+        let response;
+        try {
+            response = await fetch('/api/orders', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        } catch {
+            throw new Error('Could not reach the Eloria server. Please make sure it is running and try again.');
+        }
+        const result = await response.json().catch(() => ({}));
         if (!response.ok) throw new Error(result.message || 'Could not submit your order.');
         const history = JSON.parse(localStorage.getItem('eloria-order-history') || '[]');
         localStorage.setItem('eloria-order-history', JSON.stringify([result.orderId, ...history.filter((id) => id !== result.orderId)]));
-        consumeInventory(items);
         localStorage.setItem('eloria-cart', '[]');
         checkoutMessage.textContent = '';
         checkoutForm.reset();
@@ -99,7 +103,7 @@ checkoutForm?.addEventListener('submit', async (event) => {
         updateCartCount();
         orderSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } catch (error) {
-        checkoutMessage.textContent = `${error.message} Start the Eloria server before checking out.`;
+        checkoutMessage.textContent = error.message || 'Could not submit your order. Please try again.';
     }
 });
 

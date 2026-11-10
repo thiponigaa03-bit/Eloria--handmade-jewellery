@@ -1,72 +1,91 @@
-const catalog = {
-    Pearls: ['pearl2.jpeg', 'pearl3.jpeg', 'pearl4.jpeg', 'pearl5.jpeg', 'pearl6.jpeg', 'pearl7.jpeg', 'pearl8.jpeg', 'pearl9.jpeg', 'pearl10.jpeg', 'pearl11.jpeg', 'pearl12.jpeg', 'pearl13.jpeg'],
-    Terracotta: ['tera1.jpeg', 'tera2.jpeg', 'tera3.jpeg', 'tera4.jpeg', 'tera5.jpeg', 'tera6.jpeg', 'tera7.jpeg', 'tera8.jpeg', 'tera9.jpeg', 'tera10.jpeg', 'tera11.jpeg', 'tera12.jpeg'],
-    Resin: ['resin1.jpeg', 'resin2.jpeg', 'resin3.jpeg', 'resin4.jpeg', 'resin5.jpeg', 'resin6.jpeg', 'resin7.jpeg', 'resin8.jpeg', 'resin9.jpeg', 'resin10.jpeg', 'resin11.jpeg', 'resin12.jpeg'],
-    'Sea Shell': ['shell1.jpeg', 'shell2.jpeg', 'shell3.jpeg', 'shell4.jpeg', 'shell5.jpeg', 'shell6.jpeg', 'shell7.jpeg', 'shell8.jpeg', 'shell9.jpeg', 'shell10.jpeg', 'shell11.jpeg', 'shell12.jpeg'],
-    'Thread Work': ['work1.jpeg', 'work2.jpeg', 'work3.jpeg', 'work4.jpeg', 'work5.jpeg', 'work6.jpeg', 'work7.jpeg', 'work8.jpeg', 'work9.jpeg', 'work10.jpeg', 'work11.jpeg', 'work12.jpeg']
-};
-
-const productNames = {
-    Pearls: ['Classic Pearl Necklace', 'Pearl Necklace ', 'Pearl necklace ', 'Pearl bow Earrings', 'Pearl  Earrings', 'Pearl Stud Earrings', 'Pearl Layered bracelet', 'Pearl Bloom bracelet', 'Pearl Elegance bracelet', 'Pearl Anklet', 'Pearl bloom anklet', 'Pearl drop anklet'],
-    Terracotta: ['Terracotta Floral Necklace', 'Terracotta necklace', 'Terracotta triangle necklace', 'Terracotta Bead necklace', 'Terracotta round earrings', 'Terracotta Stud Earrings', 'Terracotta Heritage earrings', 'Terracotta round bracelet', 'Terracotta Classic bracelet', 'Terracotta Charm Bracelet', 'Terracotta Art anklet', 'Terracotta Party anklet'],
-    Resin: ['Resin Bloom Necklace', 'Resin Round necklace', 'Resin Art necklace', 'Resin Charm earrings', 'Resin Flower Earrings', 'Resin Mini earrings', 'Resin black earrings', 'Resin anklet', 'Resin Luxe anklet', 'Resin Bead Bracelet', 'Resin round anklet', 'Resin Statement bracelet'],
-    'Sea Shell': ['Sea Shell Necklace', 'Shell Drop necklace', 'Coastal Shell necklace', 'Shell Charm Bracelet', 'Ocean Shell bracelet', 'Shell Stud bracelet', 'Beach Pearl Earrings', 'Seaside Hoop Earrings', 'Shell Elegance earrings', 'Shell Bead anklet', ' Shell anklet ', 'Coastal Statement anklet'],
-    'Thread Work': ['Threadwork Necklace', 'Thread Tassel Necklace', 'Threadwork Festival necklace', 'Thread Bead Bangles', 'Thread Flower bangles', 'Thread brown bangles', 'Thread drop anklet', 'Thread Layered anklet', 'Threadwork Classic anklett', 'Thread Charm Earrings', 'Thread Art earrings', 'Thread Statement Earrings']
-};
-
-const mediumPrices = ['Rs. 1,200', 'Rs. 2,200', 'Rs. 1,200', 'Rs. 2,800', 'Rs. 2,000', 'Rs. 2,400', 'Rs. 1,600', 'Rs. 2,700', 'Rs. 2,400', 'Rs. 2,900', 'Rs. 1,100', 'Rs. 2,600'];
+const collectionGrid = document.querySelector('#collection-grid');
+const productSearch = document.querySelector('#product-search');
+const searchStatus = document.querySelector('#search-status');
 const elevenElevenOffer = new URLSearchParams(window.location.search).get('offer') === '1111';
 
-function applyElevenElevenDiscount(price) {
-    const amount = Number(price.replace(/[^0-9]/g, ''));
-    return `Rs. ${Math.round(amount * 0.75).toLocaleString()}`;
+function escapeHtml(value) {
+    return String(value ?? '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 }
 
-const collectionGrid = document.querySelector('#collection-grid');
+function formatShopPrice(amount) {
+    return `Rs. ${Number(amount || 0).toLocaleString()}`;
+}
+
+function normalizeSearchText(value) {
+    return String(value ?? '')
+        .normalize('NFKD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLocaleLowerCase()
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
+        .trim();
+}
+
+function filterProducts() {
+    const query = normalizeSearchText(productSearch.value);
+    const terms = query ? query.split(/\s+/) : [];
+    const products = [...document.querySelectorAll('.shop-product')];
+    let matches = 0;
+    products.forEach((product) => {
+        const searchableText = normalizeSearchText(product.dataset.search || product.textContent);
+        const visible = terms.every((term) => searchableText.includes(term));
+        product.hidden = !visible;
+        if (visible) matches += 1;
+    });
+    document.querySelectorAll('.collection-group').forEach((group) => {
+        group.hidden = [...group.querySelectorAll('.shop-product')].every((product) => product.hidden);
+    });
+    searchStatus.textContent = !query ? '' : matches
+        ? `${matches} item${matches === 1 ? '' : 's'} found`
+        : `No pieces found for “${productSearch.value.trim()}”. Try a product name or jewellery type.`;
+}
 
 if (collectionGrid) {
-    collectionGrid.innerHTML = `${elevenElevenOffer ? '<div class="eleven-banner">11:11 offer active — 25% off is applied to every product below.</div>' : ''}${Object.entries(catalog).map(([category, images]) => `
-        <section class="collection-group" data-category="${category.toLowerCase()}">
-            <h2>${category}</h2>
-            <div class="collection-products">
-                ${images.map((image, index) => {
-                    const name = productNames[category][index];
-                    const originalPrice = mediumPrices[index];
-                    const price = elevenElevenOffer ? applyElevenElevenDiscount(originalPrice) : originalPrice;
-                    const productId = `${category.toLowerCase().replace(/\s+/g, '-')}-${index + 1}`;
-                    return `<article class="shop-product" data-product data-product-id="${productId}" data-product-stock="12" data-product-name="${name}" data-product-price="${price}" data-product-image="${image}">
-                        <img src="${image}" alt="${name}" loading="lazy">
-                        <h3>${name}</h3>${elevenElevenOffer ? `<span class="original-price">${originalPrice}</span>` : ''}<p class="price ${elevenElevenOffer ? 'offer-price' : ''}">${price}</p><p class="stock-label" data-stock-label>12 available</p>
-                        <button type="button" data-add-to-cart>Add to Cart</button>
-                    </article>`;
-                }).join('')}
-            </div>
-        </section>`).join('')}`;
+    collectionGrid.setAttribute('aria-busy', 'true');
+    collectionGrid.innerHTML = '<p class="catalog-loading">Loading the Eloria collection…</p>';
+    productSearch?.addEventListener('input', filterProducts);
 
-    const productSearch = document.querySelector('#product-search');
-    const searchStatus = document.querySelector('#search-status');
-    productSearch?.addEventListener('input', () => {
-        const query = productSearch.value.trim().toLowerCase();
-        const products = [...document.querySelectorAll('.shop-product')];
-        let matches = 0;
+    fetch('/api/products')
+        .then((response) => {
+            if (!response.ok) throw new Error('Products could not be loaded.');
+            return response.json();
+        })
+        .then((products) => {
+            const byCategory = new Map();
+            products.forEach((product) => {
+                if (!byCategory.has(product.category)) byCategory.set(product.category, []);
+                byCategory.get(product.category).push(product);
+            });
 
-        products.forEach((product) => {
-            const matchesSearch = product.textContent.toLowerCase().includes(query);
-            product.hidden = !matchesSearch;
-            matches += matchesSearch ? 1 : 0;
+            const groups = [...byCategory.entries()].map(([category, items]) => `
+                <section class="collection-group" data-category="${escapeHtml(category.toLowerCase())}">
+                    <h2>${escapeHtml(category)}</h2>
+                    <div class="collection-products">
+                        ${items.map((product) => {
+                            const originalPrice = Number(product.price) || 0;
+                            const price = elevenElevenOffer ? Math.round(originalPrice * 0.75) : originalPrice;
+                            const formattedPrice = formatShopPrice(price);
+                            return `<article class="shop-product" data-product data-product-id="${escapeHtml(product._id)}" data-product-name="${escapeHtml(product.name)}" data-product-price="${formattedPrice}" data-product-base-price="${originalPrice}" data-product-image="${escapeHtml(product.image)}" data-search="${escapeHtml(`${product.name} ${category} ${product.description || ''}`)}">
+                                <img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}" loading="lazy">
+                                <h3>${escapeHtml(product.name)}</h3>${product.description ? `<p class="shop-description">${escapeHtml(product.description)}</p>` : ''}${elevenElevenOffer ? `<span class="original-price">${formatShopPrice(originalPrice)}</span>` : ''}<p class="price ${elevenElevenOffer ? 'offer-price' : ''}">${formattedPrice}</p>
+                                <button type="button" data-add-to-cart>Add to Cart</button>
+                            </article>`;
+                        }).join('')}
+                    </div>
+                </section>`).join('');
+
+            collectionGrid.innerHTML = groups || '<p class="catalog-empty">New handmade pieces are coming soon.</p>';
+            collectionGrid.setAttribute('aria-busy', 'false');
+            filterProducts();
+
+            const searchFromHome = new URLSearchParams(window.location.search).get('search');
+            if (searchFromHome) {
+                productSearch.value = searchFromHome;
+                filterProducts();
+                document.querySelector('.shop-search')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        })
+        .catch(() => {
+            collectionGrid.setAttribute('aria-busy', 'false');
+            collectionGrid.innerHTML = '<p class="catalog-empty">The collection could not be loaded. Please make sure the Eloria server is running and refresh the page.</p>';
         });
-
-        document.querySelectorAll('.collection-group').forEach((group) => {
-            group.hidden = [...group.querySelectorAll('.shop-product')].every((product) => product.hidden);
-        });
-
-        searchStatus.textContent = query ? `${matches} item${matches === 1 ? '' : 's'} found` : '';
-    });
-
-    const searchFromHome = new URLSearchParams(window.location.search).get('search');
-    if (searchFromHome) {
-        productSearch.value = searchFromHome;
-        productSearch.dispatchEvent(new Event('input'));
-        document.querySelector('.shop-search')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
 }

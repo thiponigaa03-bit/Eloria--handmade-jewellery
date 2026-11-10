@@ -1,6 +1,5 @@
 const CART_KEY = 'eloria-cart';
 const THEME_KEY = 'eloria-theme';
-const INVENTORY_KEY = 'eloria-inventory';
 
 function setTheme(isDark) {
     document.body.classList.toggle('dark-mode', isDark);
@@ -32,45 +31,88 @@ function bindAccountDialog() {
     const trigger = document.querySelector('#account-fab');
     if (!dialog || !trigger) return;
 
+    const choice = dialog.querySelector('#account-choice');
+    const loginForm = dialog.querySelector('#customer-login-form');
+    const registerForm = dialog.querySelector('#customer-register-form');
+    const signedIn = dialog.querySelector('#customer-signed-in');
+    const message = dialog.querySelector('#account-message');
     const title = dialog.querySelector('#account-title');
     const intro = dialog.querySelector('#account-intro');
-    const loginForm = dialog.querySelector('#login-form');
-    const registerForm = dialog.querySelector('#register-form');
-    const message = dialog.querySelector('#account-message');
-    const showForm = (register) => {
-        loginForm.hidden = register;
-        registerForm.hidden = !register;
-        title.textContent = register ? 'Create your account' : 'Welcome back';
-        intro.textContent = register ? 'Register to save your Eloria favourites.' : 'Sign in to continue your Eloria journey.';
-        message.textContent = '';
-        window.setTimeout(() => (register ? registerForm : loginForm).querySelector('input')?.focus(), 0);
-    };
 
-    trigger.addEventListener('click', () => { showForm(false); dialog.showModal(); });
+    function showView(view) {
+        choice.hidden = view !== 'choice';
+        loginForm.hidden = view !== 'customer';
+        registerForm.hidden = view !== 'register';
+        signedIn.hidden = view !== 'signed-in';
+        title.textContent = view === 'choice' ? 'Sign in to Eloria' : view === 'register' ? 'Create your account' : view === 'signed-in' ? 'Your account' : 'Customer sign in';
+        intro.textContent = view === 'choice' ? 'Choose how you would like to continue.' : view === 'register' ? 'Create an account to shop with Eloria.' : view === 'signed-in' ? 'You are signed in to your customer account.' : 'Welcome back to Eloria.';
+        message.textContent = '';
+        const form = view === 'register' ? registerForm : loginForm;
+        if (view === 'customer' || view === 'register') window.setTimeout(() => form.querySelector('input')?.focus(), 0);
+    }
+
+    async function showCustomerSession() {
+        try {
+            const response = await fetch('/api/customer/session');
+            if (!response.ok) return showView('choice');
+            const customer = await response.json();
+            dialog.querySelector('#customer-welcome').textContent = `Signed in as ${customer.name} (${customer.email}).`;
+            trigger.textContent = '👤  My account';
+            showView('signed-in');
+        } catch {
+            showView('choice');
+            message.textContent = 'Could not connect to Eloria. Please try again.';
+        }
+    }
+
+    async function submitCustomerForm(event, mode) {
+        event.preventDefault();
+        const form = event.currentTarget;
+        if (!form.reportValidity()) return;
+        const button = form.querySelector('.account-submit');
+        button.disabled = true;
+        message.textContent = mode === 'register' ? 'Creating your account…' : 'Signing in…';
+        const formData = new FormData(form);
+        const payload = mode === 'register'
+            ? { name: formData.get('name'), email: formData.get('email'), telephone: formData.get('telephone'), password: formData.get('password') }
+            : { email: formData.get('email'), password: formData.get('password') };
+        try {
+            const response = await fetch(`/api/customer/${mode}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const result = response.status === 204 ? {} : await response.json();
+            if (!response.ok) throw new Error(result.message || 'Please check your details and try again.');
+            dialog.querySelector('#customer-welcome').textContent = `Signed in as ${result.name} (${result.email}).`;
+            trigger.textContent = '👤  My account';
+            form.reset();
+            showView('signed-in');
+        } catch (error) {
+            message.textContent = error.message || 'Could not connect to Eloria. Please try again.';
+        } finally {
+            button.disabled = false;
+        }
+    }
+
+    trigger.addEventListener('click', () => {
+        dialog.showModal();
+        showCustomerSession();
+    });
     dialog.querySelector('[data-dialog-close]').addEventListener('click', () => dialog.close());
-    dialog.querySelectorAll('[data-account-view]').forEach((button) => button.addEventListener('click', () => showForm(button.dataset.accountView === 'register')));
-    loginForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        if (!loginForm.checkValidity()) { loginForm.reportValidity(); return; }
-        const identity = loginForm.querySelector('[name="identity"]').value.trim();
-        const password = loginForm.querySelector('[name="password"]').value;
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(identity)) { message.textContent = 'Enter a valid email address.'; return; }
-        if (password.length < 8) { message.textContent = 'Your password must contain at least 8 characters.'; return; }
-        message.textContent = 'Signed in successfully. Welcome to Eloria!';
-        loginForm.reset();
+    dialog.querySelectorAll('[data-account-view]').forEach((button) => button.addEventListener('click', () => showView(button.dataset.accountView)));
+    loginForm.addEventListener('submit', (event) => submitCustomerForm(event, 'login'));
+    registerForm.addEventListener('submit', (event) => submitCustomerForm(event, 'register'));
+    dialog.querySelector('#customer-logout').addEventListener('click', async () => {
+        try {
+            const response = await fetch('/api/customer/logout', { method: 'POST' });
+            if (!response.ok) throw new Error('Sign out failed. Please try again.');
+            trigger.textContent = '👤  Sign in';
+            showView('choice');
+        } catch (error) {
+            message.textContent = error.message;
+        }
     });
-    registerForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-        if (!registerForm.checkValidity()) { registerForm.reportValidity(); return; }
-        const password = registerForm.querySelector('[name="password"]').value;
-        const confirmation = registerForm.querySelector('[name="confirm-password"]').value;
-        const phone = registerForm.querySelector('[name="phone"]').value.replace(/[\s-]/g, '');
-        if (!/^(?:\+94|0)7\d{8}$/.test(phone)) { message.textContent = 'Enter a valid Sri Lankan mobile number.'; return; }
-        if (password !== confirmation) { message.textContent = 'Your passwords do not match. Please try again.'; return; }
-        message.textContent = 'Your account is ready. Welcome to Eloria!';
-        registerForm.reset();
-    });
-    registerForm.querySelector('[name="phone"]').addEventListener('input', (event) => { event.target.value = event.target.value.replace(/\D/g, '').slice(0, 10); });
 }
 
 function getCart() {
@@ -86,38 +128,6 @@ function saveCart(cart) {
     updateCartCount();
 }
 
-function getInventory() {
-    try { return JSON.parse(localStorage.getItem(INVENTORY_KEY)) || {}; } catch { return {}; }
-}
-
-function saveInventory(inventory) {
-    localStorage.setItem(INVENTORY_KEY, JSON.stringify(inventory));
-}
-
-function syncShopInventory() {
-    const inventory = getInventory();
-    document.querySelectorAll('[data-product-id]').forEach((card) => {
-        const id = card.dataset.productId;
-        const startingStock = Number(card.dataset.productStock || 12);
-        if (!Number.isFinite(inventory[id])) inventory[id] = startingStock;
-        const stock = inventory[id];
-        const stockLabel = card.querySelector('[data-stock-label]');
-        const button = card.querySelector('[data-add-to-cart]');
-        if (stockLabel) stockLabel.textContent = stock > 0 ? `${stock} available` : 'Sold out';
-        if (button) { button.disabled = stock < 1; button.textContent = stock > 0 ? 'Add to Cart' : 'Sold out'; }
-    });
-    saveInventory(inventory);
-}
-
-function consumeInventory(items) {
-    const inventory = getInventory();
-    items.forEach((item) => {
-        if (!item.id || !Number.isFinite(inventory[item.id])) return;
-        inventory[item.id] = Math.max(0, inventory[item.id] - item.quantity);
-    });
-    saveInventory(inventory);
-}
-
 function updateCartCount() {
     const count = getCart().reduce((total, item) => total + item.quantity, 0);
     document.querySelectorAll('[data-cart-count]').forEach((element) => {
@@ -128,11 +138,6 @@ function updateCartCount() {
 function addToCart(product) {
     const cart = getCart();
     const existing = cart.find((item) => item.name === product.name);
-
-    if (product.id) {
-        const stock = getInventory()[product.id] ?? product.stock;
-        if (Number.isFinite(stock) && (existing?.quantity || 0) >= stock) return false;
-    }
 
     if (existing) {
         existing.quantity += 1;
@@ -148,9 +153,9 @@ function productFromCard(card) {
     return {
         name: card.dataset.productName || card.querySelector('h3')?.textContent.trim() || 'Eloria jewellery',
         price: card.dataset.productPrice || card.querySelector('.price, p')?.textContent.trim() || 'Rs. 0',
+        basePrice: Number(card.dataset.productBasePrice) || Number(String(card.dataset.productPrice || '').replace(/[^0-9]/g, '')) || 0,
         image: card.dataset.productImage || card.querySelector('img')?.getAttribute('src') || '',
-        id: card.dataset.productId || '',
-        stock: Number(card.dataset.productStock || NaN)
+        id: card.dataset.productId || ''
     };
 }
 
@@ -159,8 +164,7 @@ function bindCartButtons() {
         if (button.dataset.cartBound) return;
         button.dataset.cartBound = 'true';
         button.addEventListener('click', () => {
-            const added = addToCart(productFromCard(button.closest('[data-product], .product, .shop-product')));
-            if (!added) { button.textContent = 'Maximum available in cart'; return; }
+            addToCart(productFromCard(button.closest('[data-product], .product, .shop-product')));
             button.textContent = 'Added to Cart';
             setTimeout(() => { button.textContent = 'Add to Cart'; }, 1200);
         });
@@ -214,8 +218,9 @@ document.addEventListener('DOMContentLoaded', () => {
     markCurrentPage();
     updateCartCount();
     bindCartButtons();
-    syncShopInventory();
     renderCart();
     bindAccountDialog();
     ensureFooterContact();
+    const collectionGrid = document.querySelector('#collection-grid');
+    if (collectionGrid) new MutationObserver(bindCartButtons).observe(collectionGrid, { childList: true, subtree: true });
 });

@@ -160,18 +160,26 @@ nav a:hover::after {
     border: 0;
 }
 
-.collection-grid { max-width: 1280px; margin: 0 auto; padding: 0 8% 80px; }
+.collection-grid { width: min(100%, 1360px); margin: 0 auto; padding: 0 clamp(18px, 4vw, 50px) 80px; }
 .collection-group { margin: 0 0 60px; }
 .collection-group h2 { margin-bottom: 24px; color: #6f4e45; font-family: 'Cormorant Garamond', serif; font-size: clamp(34px, 4vw, 48px); text-align: center; }
-.collection-products { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 22px; }
-.shop-product { overflow: hidden; padding-bottom: 20px; border: 1px solid #eadbd5; border-radius: 14px; background: #fffdfb; text-align: center; box-shadow: 0 8px 22px rgba(80, 50, 40, 0.08); }
-.shop-product img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
-.shop-product h3 { margin: 14px 12px 4px; color: #513a34; font-size: 18px; }
-.shop-product .price { margin: 0 0 12px; color: #8b5e5e; }
-.shop-product .stock-label { margin: -5px 0 12px; color: #756963; font-size: 13px; }
+.collection-products { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); align-items: stretch; gap: clamp(14px, 2vw, 22px); }
+.shop-product { display: flex; flex-direction: column; align-items: center; min-width: 0; overflow: hidden; padding: 0 0 20px; border: 1px solid #eadbd5; border-radius: 14px; background: #fffdfb; text-align: center; box-shadow: 0 8px 22px rgba(80, 50, 40, 0.08); transition: transform .2s ease, box-shadow .2s ease; }
+.shop-product[hidden], .collection-group[hidden] { display: none !important; }
+.shop-product:hover { transform: translateY(-4px); box-shadow: 0 14px 28px rgba(80, 50, 40, .14); }
+.shop-product img { display: block; width: 100%; aspect-ratio: 1 / 1; object-fit: cover; }
+.shop-product h3 { display: grid; place-items: center; min-height: 3em; margin: 10px 12px 2px; color: #513a34; font-size: 17px; line-height: 1.4; }
+.shop-product .shop-description { display: -webkit-box; min-height: 2.8em; margin: 3px 14px 8px; overflow: hidden; color: #756963; font-size: 12px; line-height: 1.4; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.shop-product .price { min-height: 1.7em; margin: 0 0 11px; color: #8b5e5e; }
 .shop-product button:disabled { background: #a99c97; cursor: not-allowed; }
 .eleven-banner { max-width: 1040px; margin: 10px auto 34px; padding: 16px 22px; border-radius: 14px; background: #6f4b4b; color: #fff8ec; text-align: center; font-weight: 600; }.original-price { display: block; color: #8e817c; font-size: 13px; text-decoration: line-through; }.offer-price { color: #a66b55 !important; font-weight: 700; }
-.shop-product button { padding: 9px 16px; border: 0; border-radius: 999px; background: #8b5e5e; color: #fff; cursor: pointer; font: inherit; }
+.shop-product button { margin-top: auto; padding: 9px 16px; border: 0; border-radius: 999px; background: #8b5e5e; color: #fff; cursor: pointer; font: inherit; }
+@media (max-width: 1000px) { .collection-products { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 720px) { .collection-products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }.collection-grid { padding-inline: 18px; }.shop-product h3 { font-size: 16px; } }
+@media (max-width: 430px) { .collection-products { grid-template-columns: 1fr; gap: 16px; }.shop-product { width: min(100%, 360px); justify-self: center; }.shop-product img { aspect-ratio: 1.15 / 1; } }
+.hero-content { width: min(100%, 750px); }
+.hero h1 { font-size: clamp(42px, 8vw, 84px); white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 600px) { .hero { min-height: 410px; padding: 24px 12px; }.hero-content { padding: 18px 8px; }.hero h1 { font-size: clamp(40px, 11vw, 58px); line-height: 1.05; }.hero p { font-size: 16px; letter-spacing: .2px; } }
 
 .hero {
     min-height: 600px;
@@ -260,4 +268,15 @@ nav a:hover::after {
 
     letter-spacing: 1px;
 
-    transition: all
+    transition: all .3s ease;
+}
+
+/* Keep the shop hero inside narrow customer screens. */
+.hero-content { width: min(100%, 750px); }
+.hero h1 { font-size: clamp(42px, 8vw, 84px); white-space: normal; overflow-wrap: anywhere; }
+@media (max-width: 600px) {
+    .hero { min-height: 410px; padding: 24px 12px; }
+    .hero-content { padding: 18px 8px; }
+    .hero h1 { font-size: clamp(40px, 11vw, 58px); line-height: 1.05; }
+    .hero p { font-size: 16px; letter-spacing: .2px; }
+}

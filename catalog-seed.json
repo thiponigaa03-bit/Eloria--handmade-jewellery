@@ -1,0 +1,482 @@
+[
+  {
+    "seedKey": "legacy-pearls-1",
+    "name": "Classic Pearl Necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "pearl2.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-2",
+    "name": "Pearl Necklace",
+    "category": "Necklaces",
+    "price": 2200,
+    "image": "pearl3.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-3",
+    "name": "Pearl necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "pearl4.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-4",
+    "name": "Pearl bow Earrings",
+    "category": "Earrings",
+    "price": 2800,
+    "image": "pearl5.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-5",
+    "name": "Pearl  Earrings",
+    "category": "Earrings",
+    "price": 2000,
+    "image": "pearl6.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-6",
+    "name": "Pearl Stud Earrings",
+    "category": "Earrings",
+    "price": 2400,
+    "image": "pearl7.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-7",
+    "name": "Pearl Layered bracelet",
+    "category": "Bracelets",
+    "price": 1600,
+    "image": "pearl8.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-8",
+    "name": "Pearl Bloom bracelet",
+    "category": "Bracelets",
+    "price": 2700,
+    "image": "pearl9.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-9",
+    "name": "Pearl Elegance bracelet",
+    "category": "Bracelets",
+    "price": 2400,
+    "image": "pearl10.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-10",
+    "name": "Pearl Anklet",
+    "category": "Anklets",
+    "price": 2900,
+    "image": "pearl11.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-11",
+    "name": "Pearl bloom anklet",
+    "category": "Anklets",
+    "price": 1100,
+    "image": "pearl12.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-pearls-12",
+    "name": "Pearl drop anklet",
+    "category": "Anklets",
+    "price": 2600,
+    "image": "pearl13.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-1",
+    "name": "Terracotta Floral Necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "tera1.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-2",
+    "name": "Terracotta necklace",
+    "category": "Necklaces",
+    "price": 2200,
+    "image": "tera2.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-3",
+    "name": "Terracotta triangle necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "tera3.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-4",
+    "name": "Terracotta Bead necklace",
+    "category": "Necklaces",
+    "price": 2800,
+    "image": "tera4.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-5",
+    "name": "Terracotta round earrings",
+    "category": "Earrings",
+    "price": 2000,
+    "image": "tera5.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-6",
+    "name": "Terracotta Stud Earrings",
+    "category": "Earrings",
+    "price": 2400,
+    "image": "tera6.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-7",
+    "name": "Terracotta Heritage earrings",
+    "category": "Earrings",
+    "price": 1600,
+    "image": "tera7.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-8",
+    "name": "Terracotta round bracelet",
+    "category": "Bracelets",
+    "price": 2700,
+    "image": "tera8.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-9",
+    "name": "Terracotta Classic bracelet",
+    "category": "Bracelets",
+    "price": 2400,
+    "image": "tera9.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-10",
+    "name": "Terracotta Charm Bracelet",
+    "category": "Bracelets",
+    "price": 2900,
+    "image": "tera10.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-11",
+    "name": "Terracotta Art anklet",
+    "category": "Anklets",
+    "price": 1100,
+    "image": "tera11.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-terracotta-12",
+    "name": "Terracotta Party anklet",
+    "category": "Anklets",
+    "price": 2600,
+    "image": "tera12.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-1",
+    "name": "Resin Bloom Necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "resin1.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-2",
+    "name": "Resin Round necklace",
+    "category": "Necklaces",
+    "price": 2200,
+    "image": "resin2.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-3",
+    "name": "Resin Art necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "resin3.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-4",
+    "name": "Resin Charm earrings",
+    "category": "Earrings",
+    "price": 2800,
+    "image": "resin4.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-5",
+    "name": "Resin Flower Earrings",
+    "category": "Earrings",
+    "price": 2000,
+    "image": "resin5.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-6",
+    "name": "Resin Mini earrings",
+    "category": "Earrings",
+    "price": 2400,
+    "image": "resin6.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-7",
+    "name": "Resin black earrings",
+    "category": "Earrings",
+    "price": 1600,
+    "image": "resin7.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-8",
+    "name": "Resin anklet",
+    "category": "Anklets",
+    "price": 2700,
+    "image": "resin8.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-9",
+    "name": "Resin Luxe anklet",
+    "category": "Anklets",
+    "price": 2400,
+    "image": "resin9.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-10",
+    "name": "Resin Bead Bracelet",
+    "category": "Bracelets",
+    "price": 2900,
+    "image": "resin10.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-11",
+    "name": "Resin round anklet",
+    "category": "Anklets",
+    "price": 1100,
+    "image": "resin11.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-resin-12",
+    "name": "Resin Statement bracelet",
+    "category": "Bracelets",
+    "price": 2600,
+    "image": "resin12.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-1",
+    "name": "Sea Shell Necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "shell1.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-2",
+    "name": "Shell Drop necklace",
+    "category": "Necklaces",
+    "price": 2200,
+    "image": "shell2.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-3",
+    "name": "Coastal Shell necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "shell3.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-4",
+    "name": "Shell Charm Bracelet",
+    "category": "Bracelets",
+    "price": 2800,
+    "image": "shell4.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-5",
+    "name": "Ocean Shell bracelet",
+    "category": "Bracelets",
+    "price": 2000,
+    "image": "shell5.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-6",
+    "name": "Shell Stud bracelet",
+    "category": "Bracelets",
+    "price": 2400,
+    "image": "shell6.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-7",
+    "name": "Beach Pearl Earrings",
+    "category": "Earrings",
+    "price": 1600,
+    "image": "shell7.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-8",
+    "name": "Seaside Hoop Earrings",
+    "category": "Earrings",
+    "price": 2700,
+    "image": "shell8.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-9",
+    "name": "Shell Elegance earrings",
+    "category": "Earrings",
+    "price": 2400,
+    "image": "shell9.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-10",
+    "name": "Shell Bead anklet",
+    "category": "Anklets",
+    "price": 2900,
+    "image": "shell10.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-11",
+    "name": "Shell anklet",
+    "category": "Anklets",
+    "price": 1100,
+    "image": "shell11.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-sea-shell-12",
+    "name": "Coastal Statement anklet",
+    "category": "Anklets",
+    "price": 2600,
+    "image": "shell12.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-1",
+    "name": "Threadwork Necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "work1.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-2",
+    "name": "Thread Tassel Necklace",
+    "category": "Necklaces",
+    "price": 2200,
+    "image": "work2.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-3",
+    "name": "Threadwork Festival necklace",
+    "category": "Necklaces",
+    "price": 1200,
+    "image": "work3.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-4",
+    "name": "Thread Bead Bangles",
+    "category": "Bracelets",
+    "price": 2800,
+    "image": "work4.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-5",
+    "name": "Thread Flower bangles",
+    "category": "Bracelets",
+    "price": 2000,
+    "image": "work5.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-6",
+    "name": "Thread brown bangles",
+    "category": "Bracelets",
+    "price": 2400,
+    "image": "work6.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-7",
+    "name": "Thread drop anklet",
+    "category": "Anklets",
+    "price": 1600,
+    "image": "work7.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-8",
+    "name": "Thread Layered anklet",
+    "category": "Anklets",
+    "price": 2700,
+    "image": "work8.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-9",
+    "name": "Threadwork Classic anklett",
+    "category": "Anklets",
+    "price": 2400,
+    "image": "work9.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-10",
+    "name": "Thread Charm Earrings",
+    "category": "Earrings",
+    "price": 2900,
+    "image": "work10.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-11",
+    "name": "Thread Art earrings",
+    "category": "Earrings",
+    "price": 1100,
+    "image": "work11.jpeg",
+    "description": ""
+  },
+  {
+    "seedKey": "legacy-thread-work-12",
+    "name": "Thread Statement Earrings",
+    "category": "Earrings",
+    "price": 2600,
+    "image": "work12.jpeg",
+    "description": ""
+  }
+]

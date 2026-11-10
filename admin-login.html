@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f3ee">
+  <title>Admin sign in | Eloria</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="admin-login.js" defer></script>
+</head>
+<body class="auth-page">
+  <main class="auth-card">
+    <a class="brand" href="home.html"><img src="eloria-logo.jpg" alt=""> <span>Eloria</span></a>
+    <p class="eyebrow">STORE MANAGEMENT</p>
+    <h1>Admin sign in</h1>
+    <p class="muted">Sign in with your administrator credentials to manage orders.</p>
+    <form id="login-form">
+      <label for="username">Username</label>
+      <input id="username" name="username" autocomplete="username" required maxlength="80">
+      <label for="password">Password</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button class="primary-button" type="submit">Sign in</button>
+      <p id="login-message" class="message" role="alert"></p>
+    </form>
+    <a class="back-link" href="home.html">← Back to Eloria</a>
+  </main>
+</body>
+</html>

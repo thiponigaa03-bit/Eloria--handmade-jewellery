@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7f3ee">
+  <title>Admin dashboard | Eloria</title>
+  <link rel="stylesheet" href="admin.css">
+  <script src="admin.js" defer></script>
+</head>
+<body class="dashboard-page">
+  <header class="dashboard-header">
+    <a class="brand" href="home.html"><img src="eloria-logo.jpg" alt=""><span>Eloria</span></a>
+    <div class="header-actions"><span id="admin-name"></span><a href="home.html">View store</a><button id="logout-button" class="quiet-button" type="button">Sign out</button></div>
+  </header>
+  <main class="dashboard-main">
+    <div class="page-heading"><div><p class="eyebrow">STORE MANAGEMENT</p><h1>Store dashboard</h1><p class="muted">Manage orders and jewellery products.</p></div><button id="refresh-button" class="quiet-button" type="button">Refresh</button></div>
+    <nav class="dashboard-tabs" aria-label="Dashboard sections"><button type="button" class="dashboard-tab is-active" data-dashboard-view="orders-view" aria-selected="true">Orders</button><button type="button" class="dashboard-tab" data-dashboard-view="products-view" aria-selected="false">Products</button></nav>
+    <p id="dashboard-message" class="message" role="status"></p>
+    <section id="orders-view" class="dashboard-view">
+      <div class="stats-row"><article class="stat-card"><span>All orders</span><strong id="order-count">—</strong></article><article class="stat-card"><span>Awaiting action</span><strong id="pending-count">—</strong></article><article class="stat-card"><span>Revenue</span><strong id="revenue-total">—</strong></article></div>
+      <section id="orders-list" class="orders-list" aria-live="polite"></section>
+    </section>
+    <section id="products-view" class="dashboard-view" hidden>
+      <div class="product-manager-heading"><div><h2>Add a product</h2><p class="muted">Choose its jewellery type, set the selling price, and add an image.</p></div></div>
+      <form id="product-form" class="product-form">
+        <label>Product name<input name="name" required minlength="2" maxlength="100" placeholder="Pearl drop earrings"></label>
+        <label>Jewellery type<select name="category" required><option value="">Choose a type</option><option>Necklaces</option><option>Earrings</option><option>Bracelets</option><option>Anklets</option><option>Rings</option><option>Jewellery Sets</option><option>Other</option></select></label>
+        <label>Price (Rs.)<input name="price" type="number" min="1" max="100000000" step="1" required placeholder="2200"></label>
+        <label class="product-image-field">Product image<input name="image" type="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif" required aria-describedby="image-help"><small id="image-help">Choose a JPG, PNG, WebP, GIF, or AVIF image from your files. Maximum size: 5 MB.</small></label>
+        <label class="product-description-field">Description <span class="optional-label">Optional</span><textarea name="description" maxlength="600" rows="3" placeholder="A short description of this piece"></textarea></label>
+        <button class="primary-button" type="submit">Add product to shop</button>
+        <p id="product-message" class="message" role="status" aria-live="polite"></p>
+      </form>
+      <div class="products-list-heading"><h2>Products in your shop</h2><span id="product-count">0 products</span></div>
+      <section id="products-list" class="admin-products-grid" aria-live="polite"></section>
+    </section>
+  </main>
+</body>
+</html>
