@@ -86,6 +86,15 @@ if (collectionGrid) {
         })
         .catch(() => {
             collectionGrid.setAttribute('aria-busy', 'false');
-            collectionGrid.innerHTML = '<p class="catalog-empty">The collection could not be loaded. Please make sure the Eloria server is running and refresh the page.</p>';
+            if (window.location.protocol === 'file:') {
+                collectionGrid.innerHTML = `<div class="catalog-empty file-protocol-help">
+                    <h2>Open Eloria through its local server</h2>
+                    <p>This shop gets its products from the MySQL-backed server, so it cannot load when this HTML file is opened directly.</p>
+                    <a href="http://localhost:3000/shop.html">Open the working Eloria shop</a>
+                    <p>If the link cannot connect, start MariaDB in XAMPP, run <code>npm start</code> from the Eloria project folder, then open this page again.</p>
+                </div>`;
+            } else {
+                collectionGrid.innerHTML = '<p class="catalog-empty">The collection could not be loaded. Make sure MariaDB and the Eloria server are running, then refresh this page.</p>';
+            }
         });
 }
